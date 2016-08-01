@@ -1,2 +1,2 @@
 # cs-desafio-node
-cs-desafio-node
+API RESTful de criação de sing up/sign in.
