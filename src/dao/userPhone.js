@@ -6,8 +6,8 @@ const path = require('path'),
 
 var dao = {
 
-  create: function(client) {
-    return userPhoneModel.create(client);
+  create: function(phone) {
+    return userPhoneModel.create(phone);
   },
 
   deleteOne: function(query) {
