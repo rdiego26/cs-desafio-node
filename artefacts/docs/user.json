@@ -1,0 +1,16 @@
+{
+  "id": "a5c69ca0-5988-11e6-818a-11275fa6f5e6",
+  "registerDate": "2016-08-03T03:00:00.000Z",
+  "name": "User",
+  "email": "email@email.com",
+  "password": "827ccb0eea8a706c4c34a16891f84e7b",
+  "lastUpdate": null,
+  "phones": [
+    {
+      "id": 163,
+      "userId": "a5c69ca0-5988-11e6-818a-11275fa6f5e6",
+      "phone": "123456789",
+      "ddd": "21"
+    }
+  ]
+}

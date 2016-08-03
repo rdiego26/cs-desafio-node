@@ -1,0 +1,6 @@
+{
+  "name": "User",
+  "email": "email@email.com",
+  "password": "12345",
+  "phones": [{"phone": "123456789", "ddd": "21"}]
+}
