@@ -66,11 +66,7 @@ describe('Session Spec', function() {
 
       _session.userId = _createdUser.id;
 
-      console.log('_createdUser: ' + JSON.stringify(_createdUser));
-
       sessionDao.create(_session).then(function(_createdSession) {
-
-        console.log('_createdSession: ' + JSON.stringify(_createdSession));
 
         sessionDao.findLast({userId: _createdUser.id}).then(function(_fetchedSession) {
 
