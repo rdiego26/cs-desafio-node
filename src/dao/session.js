@@ -30,25 +30,6 @@ var dao = {
     return sessionModel.findAll({
       where: query
     });
-  },
-
-  findOne: function(query) {
-    query = query || {};
-
-    return sessionModel.findOne({
-      where: query
-    });
-  },
-
-  update: function(newObject, filter) {
-
-    newObject = R.omit(['id'], newObject);
-
-    return sessionModel.update(newObject,
-        {
-          where: filter
-        }
-    );
   }
 
 };
