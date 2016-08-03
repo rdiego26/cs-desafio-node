@@ -13,24 +13,6 @@ describe('Session Spec', function() {
     password: "12345"
   };
 
-  afterEach(function() {
-    userDao.findOne({email: _validUser.email}).then(function(_userFetched) {
-
-      if(_userFetched) {
-
-        sessionDao.deleteOne({userId: _userFetched.id}).then(function() {
-            userDao.deleteOne({email: _validUser.email}).then(function() {
-              return;
-            }).catch();
-
-        });
-
-      }
-
-    });
-
-  });
-
 
   it('not should create session with invalid user', function(done) {
     var _session = {
@@ -59,7 +41,46 @@ describe('Session Spec', function() {
           assert.isArray(_fetchedSessions);
           assert.ok(1, _fetchedSessions.length);
 
-          done();
+          sessionDao.deleteOne({userId: _createdUser.id}).then(function() {
+
+            userDao.deleteOne({id: _createdUser.id}).then(function() {
+              done();
+            });
+
+          });
+
+        });
+
+      });
+
+    });
+
+  });
+
+  it('should create valid session and find then with findLast function', function(done) {
+
+    var _session = {
+      token: UUID.v1()
+    };
+    userDao.create(_validUser).then(function(_createdUser) {
+
+      _session.userId = _createdUser.id;
+
+      console.log('_createdUser: ' + JSON.stringify(_createdUser));
+
+      sessionDao.create(_session).then(function(_createdSession) {
+
+        console.log('_createdSession: ' + JSON.stringify(_createdSession));
+
+        sessionDao.findLast({userId: _createdUser.id}).then(function(_fetchedSession) {
+
+          sessionDao.deleteOne({userId: _createdUser.id}).then(function() {
+
+            userDao.deleteOne({id: _createdUser.id}).then(function() {
+              done();
+            });
+
+          });
 
         });
 
