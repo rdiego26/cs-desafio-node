@@ -28,17 +28,6 @@ var dao = {
     return userPhoneModel.findOne({
       where: query
     });
-  },
-
-  update: function(newObject, filter) {
-
-    newObject = R.omit(['id', 'userId'], newObject);
-
-    return userPhoneModel.update(newObject,
-        {
-          where: filter
-        }
-    );
   }
 
 };
