@@ -4,6 +4,7 @@ const cors = require('cors');
 const constants = require(path.resolve('src/util/constants'));
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const bearerToken = require('express-bearer-token');
 
 const userController = require(path.resolve('src/controller/user')) ;
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors());
+app.use(bearerToken());
 
 app.post('/api/user' , function(req, res) {
   userController.create(req, res);
@@ -22,6 +24,10 @@ app.post('/api/user' , function(req, res) {
 
 app.post('/api/user/signin' , function(req, res) {
   userController.signin(req, res);
+});
+
+app.get('/api/user/:id', function(req, res) {
+  userController.get(req, res);
 });
 
 /*DEFAULT ROUTE*/

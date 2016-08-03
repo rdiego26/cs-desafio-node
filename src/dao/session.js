@@ -18,7 +18,7 @@ var dao = {
     query = query || {};
 
     return sessionModel.findOne({
-      order: ['time', 'DESC'],
+      order: [['time', 'DESC']],
       limit: 1,
       where: query
     });

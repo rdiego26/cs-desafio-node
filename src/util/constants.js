@@ -12,7 +12,9 @@ const constants = {
 
     DEFAULT_ERROR: { mensagem: 'Erro ao processas requisição' },
     ALREADY_MAIL: { mensagem: 'E-mail já existente' },
-    INVALID_SIGNIN_DATA: { mensagem: 'Usuário e/ou senha inválidos' }
+    INVALID_SIGNIN_DATA: { mensagem: 'Usuário e/ou senha inválidos' },
+    NOT_AUTHORIZED: { mensagem: 'Não autorizado'},
+    INVALID_SESSION: { mensagem: 'Sessão inválida'}
 
   },
 
