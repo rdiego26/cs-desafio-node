@@ -95,21 +95,21 @@ const userController = {
   get: function(req, res) {
     const filter = {
       id: req.params.id || 0
-    },
-    _userId = req.params.id || 0,
-    _token = req.token;
+    };
+    const _userId = req.params.id || filter.id;
+    const _token = req.token;
 
     userSessionDao.findLast({token: _token}).then(function(_fetchedLastSession) {
 
-      if(_fetchedLastSession) {
+      if (_fetchedLastSession) {
         userSessionDao.findLast({token: _token, userId: _userId}).then(function(_fetchedSession) {
 
-          if(_fetchedSession) {
-            var _now = moment(),
-                _tokenHour = moment(_fetchedSession.time),
-                _difference = _now.diff(_tokenHour, 'hours');
+          if (_fetchedSession) {
+            var _now = moment();
+            var _tokenHour = moment(_fetchedSession.time);
+            var _difference = _now.diff(_tokenHour, 'hours');
 
-            if(_difference > 30) {
+            if (_difference > 30) {
               res.status(401).json(constants.message.INVALID_SESSION);
             } else {
 
