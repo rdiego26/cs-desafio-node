@@ -2,6 +2,7 @@ const request = require('supertest'),
     path = require('path'),
     userDao = require(path.resolve('src/dao/user')),
     userPhoneDao = require(path.resolve('src/dao/userPhone')),
+    userSessionDao = require(path.resolve('src/dao/session')),
     assert = require('chai').assert,
     R = require('ramda'),
     app = require(path.resolve('src/routes'));
@@ -17,10 +18,22 @@ describe('User API', function() {
 
   afterEach(function(done) {
 
-    userPhoneDao.deleteOne({phone: _validUser.phones[0].phone}).then(function() {
-      userDao.deleteOne({email: _validUser.email}).then(function() {
-        done();
-      }).catch();
+    userDao.findOne({email: _validUser.email}).then(function(_userFetched) {
+
+      if(_userFetched) {
+
+        userSessionDao.deleteOne({userId: _userFetched.id}).then(function() {
+
+          userPhoneDao.deleteOne({phone: _validUser.phones[0].phone}).then(function() {
+            userDao.deleteOne({email: _validUser.email}).then(function() {
+              done();
+            }).catch();
+          });
+
+        });
+
+      }
+
     });
 
   });
@@ -42,6 +55,7 @@ describe('User API', function() {
 
             assert.ok(_validUser.cpf === _createdUser.cpf);
             done();
+
           }
 
         });
