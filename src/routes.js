@@ -20,6 +20,9 @@ app.post('/api/user' , function(req, res) {
   userController.create(req, res);
 });
 
+app.post('/api/user/signin' , function(req, res) {
+  userController.signin(req, res);
+});
 
 /*DEFAULT ROUTE*/
 app.get('*' , function(req, res) {

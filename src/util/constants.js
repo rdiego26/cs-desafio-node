@@ -8,6 +8,14 @@ const constants = {
     port: 5432
   },
 
+  message: {
+
+    DEFAULT_ERROR: { mensagem: 'Erro ao processas requisição' },
+    ALREADY_MAIL: { mensagem: 'E-mail já existente' },
+    INVALID_SIGNIN_DATA: { mensagem: 'Usuário e/ou senha inválidos' }
+
+  },
+
   app: {
     name: 'Sign-in / Sign-out API'
   },

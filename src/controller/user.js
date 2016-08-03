@@ -1,6 +1,7 @@
 const path = require('path');
 const R = require('ramda');
 const UUID = require('node-uuid');
+const md5 = require('md5');
 const constants = require(path.resolve('src/util/constants'));
 const userDao = require(path.resolve('src/dao/user'));
 const userPhoneDao = require(path.resolve('src/dao/userPhone'));
@@ -57,6 +58,47 @@ const userController = {
     }).catch(function(error) {
       res.status(500).end(JSON.stringify(error));
     });
+  },
+
+  signin: function(req, res) {
+
+    const _userData = req.body;
+
+
+    userDao.findOne({email: _userData.email}).then(function(_userFetched) {
+
+      if(_userFetched) {
+
+        userDao.findOne({email: _userData.email, password: md5(_userData.password)}).then(function(_userFullyFetched) {
+
+          if(_userFullyFetched) {
+
+            var _finalUser =  _userFullyFetched.toJSON();
+
+            userSessionDao.create({userId: _userFullyFetched.id, token: UUID.v1()}).then(function(_createdSession) {
+
+              _finalUser.token = _createdSession.token;
+              _finalUser.time = _createdSession.time;
+
+              userPhoneDao.find({userId: _userFullyFetched.id}).then(function(_phones) {
+                _finalUser.phones = _phones;
+                res.status(200).json(_finalUser);
+              });
+
+            });
+
+          } else {
+            res.status(401).json(constants.message.INVALID_SIGNIN_DATA);
+          }
+
+        });
+
+      } else {
+        res.status(400).json(constants.message.INVALID_SIGNIN_DATA);
+      }
+
+    });
+
   },
 
   get: function(req, res) {
